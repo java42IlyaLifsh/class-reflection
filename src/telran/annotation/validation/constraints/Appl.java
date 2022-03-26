@@ -7,7 +7,7 @@ public class Appl {
 		Validator vaildator = new Validator();
 		System.out.println("-----------------------------");
 		List<String> results = vaildator.validate(new Person());
-		System.out.println("Amount of violations is "+results.size());
+		System.out.println("Total ammount of checks was "+results.size());
 		results.forEach(str -> System.out.println(str));
 	}
 }

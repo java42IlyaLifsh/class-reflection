@@ -32,6 +32,7 @@ public class Validator {
 			e.printStackTrace();
 			return;
 		}
+		//[YG] just violations.addAll(validate(nestObject)) would be enough
 		Arrays.stream(nestedObj.getClass().getDeclaredFields()).forEach(f -> validate(f, violations, nestedObj));
 	}
 	private void regularValidation(Field field, List<String> violations,
@@ -43,7 +44,7 @@ public class Validator {
 		if (annotationMax != null) {String violationMsg = max( annotationMax, field, obj); violations.add(violationMsg);}
 		if (annotationMin != null) {String violationMsg = min(annotationMin, field, obj); violations.add(violationMsg);}
 		if (annotationPatern != null) {String violationMsg = pattern(annotationPatern, field, obj); violations.add(violationMsg);}
-
+//[YG] a field may contain several annotations, you consider only one
 		
 /*		I was only able to debug the IF variant. I understand what is right to do through CLASS , 
 		   but unfortunately I'm still confused, SORRY. 
@@ -75,7 +76,7 @@ public class Validator {
 	}
 	private String max(Max annotation, Field field, Object obj) {
 		
-		try {			
+		try {		//[YG] getDoble works only for type double, but min/max might be applied for any numeric type	
 				double fieldValue = field.getDouble(obj);
 				double annotationValue = annotation.value();
 				if(fieldValue > annotationValue) {
